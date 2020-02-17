@@ -81,6 +81,7 @@
       // responseText 可以通过代码提示补全
       jokeContainer.innerHTML = xhr.responseText;
     }
+    // 注意：上面是给 xhr 对象注册事件，事件会在数据获取完毕后自动触发。
   }
 
 

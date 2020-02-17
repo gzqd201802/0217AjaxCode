@@ -22,6 +22,7 @@
         // 小结：所以 get 请求的参数也是直接写到请求地址上。
 
 
+        debugger;
         // 1. 创建 ajax 实例对象
         const xhr = new XMLHttpRequest();
         // 2. 打开通道
@@ -33,8 +34,9 @@
         // 3. 发送
         xhr.send();
 
-        // 4. 注册事件
+        // 4. 注册事件，回调函数
         xhr.onload = function(){
+            debugger;
             console.log(xhr.responseText);
         }
 

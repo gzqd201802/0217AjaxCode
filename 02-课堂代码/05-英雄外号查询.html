@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      body {
+        text-align: center;
+      }
+      .name {
+        color: deepskyblue;
+      }
+      .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>英雄外号查询</h1>
+    <input type="text" placeholder="请输入查询的名字" class="hero-input" />
+    <input type="button" value="英雄查询" class="search" />
+    <h2><span class="name"></span>---<span class="title"></span></h2>
+    <script>
+      // 英雄外号查询
+      // 根据英雄 姓名 查询英雄的 外号
+      // 请求地址：https://autumnfish.cn/api/hero/simple
+      // 示例：https://autumnfish.cn/api/hero/simple?name=提莫
+      // 请求方法：get
+      // 请求参数：name
+      // 参数名	参数说明	备注
+      // name	英雄名	不能为空,直接跟在 url 后，格式 name=xxx
+      // 响应内容：英雄的外号
+
+      // 思路：
+      //  1. 查找元素，输入框，查询按钮，英雄名字的span 和 英雄外号的span
+      //  2. 给查询按钮添加点击事件
+      //  3. 点击的后获取，输入框的内容，并向服务器获取对应名称
+      //  4. 把英雄名字显示，加载中...
+      //  5. 把英雄外号 显示到页面中
+
+      const heroInput = document.querySelector('.hero-input');
+      const search = document.querySelector('.search');
+      const name = document.querySelector('.name');
+      const title = document.querySelector('.title');
+
+      // 2. 给查询按钮添加点击事件
+      search.onclick = function(){
+        // 3.1. 获取输入框的内容
+        const str = heroInput.value.trim();
+        // 3.2  把获取到的文字显示到页面中
+        name.innerHTML = str;
+        title.innerHTML = '加载中...';
+
+        // 4.通过 ajax 技术，在不刷新页面情况下获取到英雄别名
+        // 4.1. 创建 小黄人 实例对象
+        const xhr = new XMLHttpRequest();
+        // 4.2. 打开小黄人小书包，放入请求方式和地址
+        xhr.open('get',`https://autumnfish.cn/api/hero/simple?name=${str}`);
+        // 4.3. 小黄人发送到服务器
+        xhr.send();
+        // 4.4. 小黄人注册一个 onload 事件，数据获取完毕后，自动会触发函数里面的代码
+        xhr.onload = function(){
+          title.innerHTML = xhr.responseText
+        }
+        
+      }
+
+
+     
+
+
+    </script>
+  </body>
+</html>
