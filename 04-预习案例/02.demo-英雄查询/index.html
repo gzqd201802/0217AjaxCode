@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="lib/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- 写在 导入之后 -->
+    <style>
+      /* 如果页面中用了多个 .navbar 全部都改了
+      一般添加一个自己的类名避免覆盖问题
+     */
+      .my-navbar {
+        margin: 0;
+      }
+      /* 自定义的类名 */
+      .col-margin {
+        /* margin: 10px 0; */
+        /* 盒模型 box-sizing 怪异盒模型 */
+        padding: 10px;
+      }
+      .my-pagination a {
+        width: 41px;
+        text-align: center;
+      }
+    </style>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!-- css hack 条件注释 满足某些条件就会生效 -->
+    <!-- 
+      html5shiv:
+        低版本ie兼容h5新语义标签 header,footer,section...
+        原理用js创建了这个元素 设置display:block
+      respond:
+        媒体查询低版本浏览器兼容
+   -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default my-navbar">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#bs-example-navbar-collapse-1"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">克鲁赛德战记</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control input-search"
+                placeholder="请输入查询的英雄"
+              />
+            </div>
+            <button type="submit" class="btn btn-default btn-search">
+              搜索
+            </button>
+          </form>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+    <!-- 内容容器 -->
+    <div class="container">
+      <!-- 内容 -->
+      <div class="row">
+        <div class="col-xs-3 col-margin ">
+          <div class="media">
+            <div class="media-left">
+              <a href="#">
+                <img
+                  class="media-object"
+                  src="http://p0.qhimg.com/dr/72__/t016f2baa3729884891.png"
+                  alt="..."
+                />
+              </a>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">专职打劫犯</h4>
+              黑暗制裁
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!-- 解决js兼容 -->
+<script src="lib/js/jquery-1.12.4.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="lib/js/bootstrap.min.js"></script>
+<script src="./lib/js/heima.js"></script>
+<!-- 导入模板引擎 -->
+<script src="./lib/js/template-web.js"></script>
+<!-- 写模板 -->
+<script id="hero" type="text/html">
+  {{each list}}
+    <div class="col-xs-3 col-margin ">
+      <div class="media">
+        <div class="media-left">
+          <a href="#">
+            <img class="media-object" src="{{$value.icon}}" alt="...">
+          </a>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">{{$value.name}}</h4>
+          {{$value.skill}}
+        </div>
+      </div>
+    </div>
+  {{/each}}
+</script>
+<script>
+  /*
+    - 请求地址：https://autumnfish.cn/api/cq
+    - 请求方法：get
+    - 请求参数：query
+    步骤
+
+    1. 点击搜索时
+    2. 获取文本框的值
+    3. 调用接口
+      1. heima.get
+    4. 数据获取到之后 渲染到页面上
+      1. 模板引擎
+  */
+  $(function() {
+    // 默认获取所有数据
+    heima.get('https://autumnfish.cn/api/cq', 'query=', function(
+      xhrData
+    ) {
+      // console.log(xhrData)
+      // 数据
+      var heroData = JSON.parse(xhrData)
+      // 核心方法
+      var html = template('hero', heroData)
+      // console.log(html);
+      $('.row').html(html)
+    })
+
+    // 点击搜索
+    $('.btn-search').click(function(event) {
+      // 阻止默认行为 写哪都可以
+      event.preventDefault()
+      // 获取文本框的值
+      var query = $('.input-search').val()
+      // ajax请求
+      heima.get('https://autumnfish.cn/api/cq', 'query=' + query, function(
+        xhrData
+      ) {
+        // console.log(xhrData)
+        // 数据
+        var heroData = JSON.parse(xhrData)
+        // 核心方法
+        var html = template('hero', heroData)
+        // console.log(html);
+        $('.row').html(html)
+      })
+
+      // 阻止默认行为 必须写在最后面
+      // return false
+    })
+  })
+</script>

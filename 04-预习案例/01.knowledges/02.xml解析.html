@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script src="./lib/jquery-1.12.4.min.js"></script>
+<script>
+  // 1.实例化ajax对象 (小黄人对象)
+  var xhr = new XMLHttpRequest()
+  // 2.设置请求的方法和地址
+  xhr.open('get', 'http://wthrcdn.etouch.cn/WeatherApi?city=惠州')
+  // 4.注册回调函数
+  xhr.onload = function() {
+    // console.log(xhr.responseText)
+    // 不能够使用JSON.parse 因为他不是JSON
+    // jQuery来解析
+    // 参数1 选择器
+    // 参数2 查找的区域 不设置 去页面中找
+    console.log($('city',xhr.responseText).text())
+  }
+  // 5.发送请求 post的数据在send中发送
+  xhr.send()
+</script>

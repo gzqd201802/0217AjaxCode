@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // get
+  // data的格式 是 key=value
+  // function get(url, data, callback) {
+  //   // 1.实例化ajax对象 (小黄人对象)
+  //   var xhr = new XMLHttpRequest()
+  //   // 2.设置请求的方法和地址
+  //   // 处理数据
+  //   url += '?'
+  //   url += data
+  //   xhr.open('get', url)
+  //   // 4.注册回调函数
+  //   xhr.onload = function() {
+  //     callback(xhr.responseText)
+  //   }
+  //   // 5.发送请求 post的数据在send中发送
+  //   xhr.send()
+  // }
+  // // get('https://autumnfish.cn/api/joke/list','num=10',function(backData){
+  //   // console.log(backData);
+  //   console.log(JSON.parse(backData))
+  // })
+
+  // post
+  // data的格式必须是 key=value
+  // function post(url, data, callback) {
+  //   // 1.实例化ajax对象 (小黄人对象)
+  //   var xhr = new XMLHttpRequest()
+  //   // 2.设置请求的方法和地址
+  //   xhr.open('post', url)
+  //   // 3.设置请求头(post才需要)
+  //   xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+  //   // 4.注册回调函数
+  //   xhr.onload = function() {
+  //     callback(xhr.responseText)
+  //   }
+  //   // 5.发送请求 post的数据在send中发送
+  //   xhr.send(data)
+  // }
+  // // post('https://autumnfish.cn/api/user/check','username=眼光龙',function(backData){
+  //   alert(backData)
+  // })
+
+  // 弄一个对象把方法丢进去
+  // var heima = {
+  //   post: function(url, data, callback) {
+  //     // 1.实例化ajax对象 (小黄人对象)
+  //     var xhr = new XMLHttpRequest()
+  //     // 2.设置请求的方法和地址
+  //     xhr.open('post', url)
+  //     // 3.设置请求头(post才需要)
+  //     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+  //     // 4.注册回调函数
+  //     xhr.onload = function() {
+  //       callback(xhr.responseText)
+  //     }
+  //     // 5.发送请求 post的数据在send中发送
+  //     xhr.send(data)
+  //   },
+  //   get: function(url, data, callback) {
+  //     // 1.实例化ajax对象 (小黄人对象)
+  //     var xhr = new XMLHttpRequest()
+  //     // 2.设置请求的方法和地址
+  //     // 处理数据
+  //     url += '?'
+  //     url += data
+  //     xhr.open('get', url)
+  //     // 4.注册回调函数
+  //     xhr.onload = function() {
+  //       callback(xhr.responseText)
+  //     }
+  //     // 5.发送请求 post的数据在send中发送
+  //     xhr.send()
+  //   }
+  // }
+</script>
+<script src="./lib/heima.js"></script>
+<script>
+  heima.get('https://autumnfish.cn/api/joke/list','num=66',function(backData){
+    alert(backData)
+  })
+</script>

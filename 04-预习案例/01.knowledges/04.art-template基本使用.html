@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<!-- 1. 导入art-template.js文件 -->
+<script src="./lib/template-web.js">
+</script>
+<!-- 2. 写一个模板
+  id 模板的名字方便后续使用
+  type:
+    不写或者写js 都会把内容解析为js
+    如果写其他的不会解析，
+    下面之所以写成text/html 是为了好看
+-->
+<script id="tem" type="text/html">
+  <h2>
+    <p>我的名字是:{{name}}</p>
+    <h3>我的技能是:{{skill}}</h3>
+    <h4>我有一个好朋友{{friend.name}}</h4>
+    <h4>他擅长:{{friend.skill}}</h4>
+  </h2>
+</script>
+<script>
+  // 3. 准备一份数据跟模板关联起来
+  var data = {
+    name: '柯基',
+    skill: '腿短，翘臀',
+    friend:{
+      name:'眼光龙',
+      skill:'用眼神杀死你'
+    }
+  }
+  // 4. 调用他提供的核心方法
+  var html = template('tem',data)
+  // console.log(html);
+  document.body.innerHTML = html
+</script>

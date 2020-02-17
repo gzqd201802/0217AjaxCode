@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>天气查查查--</h2>
+    <input type="text" placeholder="请输入查询的城市" class="search" />
+    <p class="suggest"></p>
+    <ul class="weather"></ul>
+  </body>
+</html>
+<script src="./lib/jquery-1.12.4.min.js"></script>
+<script>
+  /*
+    请求地址：http://wthrcdn.etouch.cn/weather_mini
+
+    示例：http://wthrcdn.etouch.cn/weather_mini?city=深圳
+
+    请求方法：get
+
+    请求参数：city
+
+    步骤：
+
+    1. 文本框绑定 keyup keyCode13
+    2. 获取文本框的内容
+    3. ajax获取数据
+    4. 数据回来之后
+    5. 渲染到页面上
+      1. 建议
+      2. 天气信息
+  */
+  $(function() {
+    $('.search').keyup(function(event) {
+      if (event.keyCode == 13) {
+        // 获取value
+        var city = $(this).val()
+        // 调用接口
+        // 1.实例化ajax对象 (小黄人对象)
+        var xhr = new XMLHttpRequest()
+        // 2.设置请求的方法和地址
+        xhr.open('get', 'http://wthrcdn.etouch.cn/weather_mini?city=' + city)
+        // 4.注册回调函数
+        xhr.onload = function() {
+          var weather = JSON.parse(xhr.responseText)
+          console.log(weather)
+          // 设置提示信息
+          $('.suggest').text(weather.data.ganmao)
+          // 生成li标签
+          for (var i = 0; i < weather.data.forecast.length; i++) {
+            // 保存一下 方便编码
+            var current = weather.data.forecast[i]
+            $(
+              '<li>' +
+                current.date +
+                ':' +
+                current.high +
+                '--' +
+                current.low +
+                ':' +
+                current.type +
+                '</li>'
+            ).appendTo('.weather')
+          }
+        }
+        // 5.发送请求 post的数据在send中发送
+        xhr.send()
+      }
+    })
+  })
+</script>

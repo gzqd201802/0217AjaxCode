@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<!-- 1. 导入art-template.js文件 -->
+<script src="./lib/template-web.js"></script>
+<!-- 2. 写一个模板
+  $index 索引
+  $value 遍历的每一项
+-->
+<script id="tem" type="text/html">
+  <h2>我的名字是{{name}}</h2>
+  {{if age>=25}}
+    <a href="#">恭喜你，到了晚婚的年龄啦 哈哈哈哈</a>
+  {{/if}}
+  <ul>
+    {{each friends}}
+    <li>{{$index}}--{{$value.name}}--{{$value.skill}}</li>
+    {{/each}}
+  </ul>
+</script>
+<script>
+  // 3. 准备一份数据跟模板关联起来
+  var person = {
+    name: '眼光龙',
+    age: 26,
+    friends: [
+      {
+        name: '波波',
+        skill: '跑得快'
+      },
+      {
+        name: '加号',
+        skill: '吃得多胃口好'
+      }
+    ]
+  }
+
+  // 4. 调用他提供的核心方法
+  var html = template('tem', person)
+  // console.log(html);
+  document.body.innerHTML = html
+</script>
