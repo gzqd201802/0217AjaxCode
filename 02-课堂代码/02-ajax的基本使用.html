@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2231923584,172905588&fm=26&gp=0.jpg" alt="">
+    <script>
+
+        // 目标：ajax 的基本使用
+        // 使用步骤：
+        // 1. 创建ajax对象
+        // 2. 设置 请求的方法 和请求的地址
+        // 3. 发送请求
+        // 4. 注册回调函数
+
+        
+        // 1. 创建ajax对象 - 可以理解为一个帮我干活的小黄人对象。
+        const xhr = new XMLHttpRequest();
+        // 2. 设置 请求的方法 和请求的地址
+        xhr.open('get', 'https://autumnfish.cn/api/joke');
+        // 3. 发送请求
+        xhr.send();
+        // 4. 注册回调函数
+        xhr.onload = function(){
+            // 在ajax对象中通过 responseText 属性获取从服务器带回的数据
+            console.log(xhr.responseText);
+        }
+
+
+
+    </script>
+</body>
+</html>
