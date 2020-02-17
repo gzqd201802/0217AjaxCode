@@ -98,6 +98,7 @@
         // 后台返回 JSON 格式的字符串，可通过 JSON.parse() 转换成 JS 对象
         // console.log(xhr.responseText);
         const obj = JSON.parse(xhr.responseText);
+        console.log(obj);
         // obj.jokes 是数组格式，保存了多个笑话
         // 把数组映射成 html 节点格式
         const htmlArr = obj.jokes.map(function(item,index){
