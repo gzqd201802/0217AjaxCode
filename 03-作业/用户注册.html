@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <style>
+    .info {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>用户注册</h2>
+  <input type="text" placeholder="请输入用注册的用户名" class="username" />
+  <span class="info"></span>
+  <br />
+  <input type="button" value="注册" class="submit" />
+
+  <script>
+    /*
+      用户验证
+      - 请求地址：https://autumnfish.cn/api/user/check
+      - 请求方法：post
+      - 请求参数：username
+      
+      1. 文本框失去焦点事件
+      2. 获取文本框的value值
+      3. 左侧变为 验证中...
+      4. 调用用户验证接口
+      5. 数据返回之后设置到左侧
+      
+      用户注册
+      - 请求地址：https://autumnfish.cn/api/user/register
+      - 请求方法：post
+      - 请求参数：username
+      
+      1. 绑定点击事件
+      2. 获取文本框的value值
+      3. 右侧变为 注册中...
+      4. 调用用户注册接口
+      5. 数据返回之后设置到 右侧
+   */
+
+  // 查找元素
+  const username = document.querySelector('.username');
+  // 右侧提示盒子
+  const info = document.querySelector('.info');
+  const submit = document.querySelector('.submit');
+  
+  // 用户验证
+  // 1. 文本框失去焦点事件
+  username.onblur = function(){
+    // 2. 获取文本框的value值
+    const str = username.value.trim();
+    // 3. 左侧变为 验证中...
+    info.innerHTML = '验证中...';
+    // 4. 调用用户验证接口 - Ajax 的 post 流程
+    // 4.1. 创建 xhr 对象
+    const xhr = new XMLHttpRequest();
+    // 4.2. open() 设置 请求的方法 和请求的地址
+    xhr.open('post', 'https://autumnfish.cn/api/user/check');
+    // 4.3. !!! 设置请求头(post请求才需要)
+    xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+    // 4.4. send() post 需要在这里发送数据
+    xhr.send(`username=${str}`);
+    // 4.5. 注册回调函数
+    xhr.onload = function(){
+      // 5. 数据返回之后设置到左侧
+      // console.log(xhr.responseText);
+      info.innerHTML = xhr.responseText;
+    }
+  }
+
+
+  // 用户注册
+  // 1. 点击注册按钮，注册一个新用户
+  submit.onclick = function(){
+      // 2. 获取文本框的value值
+      const str = username.value.trim();
+      // 3. 右侧变为 注册中...
+      info.innerHTML = '注册中...';
+      // 4. 调用用户注册接口 - Ajax post 流程
+      // 4.1. 创建 xhr 对象
+      const xhr = new XMLHttpRequest();
+      // 4.2. open() 设置 请求的方法 和请求的地址
+      xhr.open('post', 'https://autumnfish.cn/api/user/register');
+      // 4.3. !!! 设置请求头(post请求才需要)
+      xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+      // 4.4. send() post 需要在这里发送数据
+      xhr.send(`username=${str}`);
+      // 4.5. 注册回调函数
+      xhr.onload = function(){
+        // 5. 数据返回之后设置到左侧
+        info.innerHTML = xhr.responseText;
+      }
+  }
+
+  // 重点注意：
+  //    1. 有两个功能，需要分别注册两个事件
+  //    2. 两个效果的提示文本也是不一样的
+  //    3. 两个事件都是 post 请求，注意添加请求头和在 send 中传递参数
+  //    4. 两个 post 请求的地址是不一样的，记得修改地址
+  //    5. 不管成功还是失败，这个逻辑其实都是后台返回的，我们前台只需要把内容显示即可
+
+
+  </script>
+</body>
+
+</html>

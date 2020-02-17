@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: black;
+        text-align: center;
+      }
+      .hero {
+        padding: 10px;
+        font-size: 25px;
+        border-radius: 10px;
+        outline: none;
+      }
+      .bg {
+        width: 1000px;
+        height: 590px;
+        margin: 10px auto;
+        background-image: url(http://img1.dwstatic.com/lol/1512/315320556654/1451366974753.jpg);
+        background-repeat: no-repeat;
+        background-size: 1000px 590px;
+      }
+      .bg .left {
+        height: 590px;
+        width: 300px;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding-left: 20px;
+        padding-top: 30px;
+        box-sizing: border-box;
+        overflow-y: auto;
+      }
+      .left span {
+        color: white;
+      }
+      .left .name {
+        margin-top: 30px;
+        font-size: 30px;
+      }
+      .left .icon {
+        width: 120px;
+        height: 120px;
+      }
+      .left .title {
+        margin-top: 20px;
+        font-size: 50px;
+        display: block;
+        font-weight: 900;
+      }
+      .left .story {
+        font-weight: 700;
+        color: skyblue;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" class="hero" placeholder="输入英雄按下回车查询" />
+    <div class="bg">
+      <div class="left">
+        <div>
+          <span class="name">提莫 </span>
+          <img
+            class="icon"
+            src="http://img.dwstatic.com/lol/1310/246295394773/1382341114833.png"
+            alt=""
+          />
+        </div>
+        <span class="title">迅捷斥候</span>
+        <p class="story">团战可以输，大龙可以丢，高地可以破，提莫必须死</p>
+      </div>
+    </div>
+  </body>
+</html>
+<script src="./libs/jquery-1.12.4.min.js"></script>
+<script>
+  /*
+    请求地址：https://autumnfish.cn/api/hero/info
+    请求方法：get
+    请求参数：name
+    1. 为文本框绑定  keyup event.keyCode==13
+    2. 获取输入的内容
+    3. 调用英雄详情接口
+    4. 数据获取到之后渲染到页面上即可
+  */
+  $(function() {
+    // 绑定事件
+    $('.hero').keyup(function(event) {
+      if (event.keyCode == 13) {
+        // 获取名字
+        var name = $(this).val()
+        // ajax
+        // 1.实例化ajax对象 (小黄人对象)
+        var xhr = new XMLHttpRequest()
+        // 2.设置请求的方法和地址
+        xhr.open('get', 'https://autumnfish.cn/api/hero/info?name=' + name)
+        // 3.设置请求头(post才需要)
+        // 4.注册回调函数
+        xhr.onload = function() {
+          // alert(xhr.responseText)
+          // 转为js对象
+          var hero = JSON.parse(xhr.responseText)
+          // console.log(hero)
+          // 挨个替换
+          // 名字
+          $('.name').text(hero.name)
+          // 外号
+          $('.title').text(hero.title)
+          // 背景
+          $('.bg').css('background-image', 'url(' + hero.bg + ')')
+          // 头像
+          $('.icon').attr('src', hero.icon)
+          // 故事
+          $('.story').text(hero.story)
+        }
+        // 5.发送请求 post的数据在send中发送
+        xhr.send()
+      }
+    })
+  })
+</script>

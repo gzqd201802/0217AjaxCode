@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: black;
+        text-align: center;
+      }
+      .hero {
+        padding: 10px;
+        font-size: 25px;
+        border-radius: 10px;
+        outline: none;
+      }
+      .bg {
+        width: 1000px;
+        height: 590px;
+        margin: 10px auto;
+        background-image: url(http://ossweb-img.qq.com/images/lol/web201310/skin/big17000.jpg);
+        background-repeat: no-repeat;
+        background-size: 1000px 590px;
+      }
+      .bg .left {
+        height: 590px;
+        width: 300px;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding-left: 20px;
+        padding-top: 30px;
+        box-sizing: border-box;
+        overflow-y: auto;
+      }
+      .left span {
+        color: white;
+      }
+      .left .name {
+        margin-top: 30px;
+        font-size: 30px;
+      }
+      .left .icon {
+        width: 120px;
+        height: 120px;
+      }
+      .left .title {
+        margin-top: 20px;
+        font-size: 50px;
+        display: block;
+        font-weight: 900;
+      }
+      .left .story {
+        font-weight: 700;
+        color: skyblue;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" class="hero" placeholder="输入英雄按下回车查询" />
+    <div class="bg">
+      <div class="left">
+        <div>
+          <span class="name">提莫 </span>
+          <img
+            class="icon"
+            src="http://ossweb-img.qq.com/images/lol/web201310/skin/small17000.jpg"
+            alt=""
+          />
+        </div>
+        <span class="title">迅捷斥候</span>
+        <p class="story">团战可以输，大龙可以丢，高地可以破，提莫必须死</p>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  /*
+    请求地址：https://autumnfish.cn/api/hero/info
+    请求方法：get
+    请求参数：name
+
+    1. 为文本框绑定  keyup event.keyCode==13
+    2. 获取输入的内容
+    3. 调用英雄详情接口
+    4. 数据获取到之后渲染到页面上即可
+  */
+
+  // 查询英雄的输入框  
+  const hero = document.querySelector('.hero');
+  // 背景图片/名字/头像/外号/简介
+  const bg = document.querySelector('.bg');
+  const name = document.querySelector('.name');
+  const title = document.querySelector('.title');
+  const story = document.querySelector('.story');
+  const icon = document.querySelector('.icon');
+
+  // 1. 为文本框绑定  keyup event.keyCode==13
+  hero.onkeyup = function(event){
+    // 是否为回车键
+    if(event.keyCode === 13){
+      // 2. 获取输入的内容
+      const str = hero.value.trim();
+      // 3. 调用英雄详情接口 - ajax 的 get 请求
+      // 01. 创建ajax对象 小黄人对象
+      const xhr = new XMLHttpRequest();
+      // 02. 设置 请求的方法 和请求的地址 - 注意写法
+      xhr.open('get',`https://autumnfish.cn/api/hero/info?name=${str}`);
+      // 03. 发送请求
+      xhr.send();
+      // 04. 注册回调函数
+      xhr.onload = function(){
+        // 4. 数据获取到之后渲染到页面上即可
+        // console.log(xhr.responseText);
+        const obj = JSON.parse(xhr.responseText);
+        // 设置背景图 - 通过行内样式的 backgroundImage 实现
+        bg.style.backgroundImage = `url(${obj.bg})`;
+        // 名字变化，外号，简介
+        name.innerHTML = obj.name;
+        title.innerHTML = obj.title;
+        story.innerHTML = obj.story;
+        // 换 img 图片需要通过 src 属性更换
+        icon.src = obj.icon;
+      }
+    }
+  }
+
+  // 案例重点：
+  //    1. Ajax 的 get 请求，注意参数的位置
+  //    2. JSON.parse()  把后台返回的 json 字符串转换成 JS 对象
+  //    3. 背景图，通过 元素.style.backgroundImage 实现修改
+  //    4. img 标签，通过 元素.src 修改
+  //    5. 文本的修改，通过 innerHTML 修改即可
+  
+</script>
