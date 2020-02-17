@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // 获取多条随机笑话
+        // 随机获取笑话的接口
+        // 请求地址：https://autumnfish.cn/api/joke/list
+        // 请求方法：get
+        // 请求参数：num
+        // 参数名	参数说明	备注
+        // num	   笑话条数	    类型为数字,不要给错了
+
+        // get 请求，其实就是直接通过一个完整地址请求。
+        //   浏览器地址栏中输入本质上就是一个 get 请求，只不过浏览器输入会刷新页面。
+        //   如果通过 ajax 技术，get 请求可以不刷新页面情况下获取数据 
+        // 小结：所以 get 请求的参数也是直接写到请求地址上。
+
+
+        // 1. 创建 ajax 实例对象
+        const xhr = new XMLHttpRequest();
+        // 2. 打开通道
+        //   1. get方式的请求参数直接写到地址中。
+        //   2. 格式：基本地址?参数名=数据
+        //   3. 建议地址使用反引号模板字符串，方便以后挖坑替换参数的值 
+        xhr.open('get',`https://autumnfish.cn/api/joke/list?num=3`);
+
+        // 3. 发送
+        xhr.send();
+
+        // 4. 注册事件
+        xhr.onload = function(){
+            console.log(xhr.responseText);
+        }
+
+
+    </script>
+</body>
+</html>
