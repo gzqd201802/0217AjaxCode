@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  /*
+    目标：了解 Ajax post 请求的基本流程写法
+    用户验证
+    验证用户名是否可用
+    请求地址：https://autumnfish.cn/api/user/check
+    请求方法：post
+    请求参数：username
+    参数名	参数说明	备注
+    username	用户名	不能为空,通过send方法传递，格式为key=value
+    xhr.send('username=xxx')
+  */
+
+  // 1. 创建 xhr 对象
+  const xhr  = new XMLHttpRequest();
+  // 2. open() 设置 请求的方法 和请求的地址
+  xhr.open('post', 'https://autumnfish.cn/api/user/check');
+  // 3. !!! 设置请求头(post请求才需要)
+  xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+  // 4. send() post 需要在这里发送数据
+  xhr.send(`username=xxx`);
+  // 5. 注册回调函数
+  xhr.onload = function(){
+    console.log(xhr.responseText);
+  }
+   
+
+</script>
