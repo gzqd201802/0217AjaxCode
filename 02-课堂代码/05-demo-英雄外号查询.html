@@ -36,9 +36,10 @@
       // 思路：
       //  1. 查找元素，输入框，查询按钮，英雄名字的span 和 英雄外号的span
       //  2. 给查询按钮添加点击事件
-      //  3. 点击的后获取，输入框的内容，并向服务器获取对应名称
-      //  4. 把英雄名字显示，加载中...
-      //  5. 把英雄外号 显示到页面中
+      //  3. 点击的后获取，输入框的内容
+      //  4. 把英雄名字显示到下面左边，右边显示加载中...
+      //  5. 通过 ajax 并向服务器获取数据
+      //  6. 数据回来之后，把返回的 英雄外号 显示到下面右边
 
       const heroInput = document.querySelector('.hero-input');
       const search = document.querySelector('.search');
@@ -50,7 +51,9 @@
         // 3.1. 获取输入框的内容
         const str = heroInput.value.trim();
         // 3.2  把获取到的文字显示到页面中
+        // 左侧
         name.innerHTML = str;
+        // 右侧
         title.innerHTML = '加载中...';
 
         // 4.通过 ajax 技术，在不刷新页面情况下获取到英雄别名
@@ -62,9 +65,10 @@
         xhr.send();
         // 4.4. 小黄人注册一个 onload 事件，数据获取完毕后，自动会触发函数里面的代码
         xhr.onload = function(){
+          // 右侧文字替换成服务器返回的数据
           title.innerHTML = xhr.responseText
         }
-        
+
       }
 
 
