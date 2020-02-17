@@ -91,7 +91,7 @@
     $('.hero').keyup(function(event) {
       if (event.keyCode == 13) {
         // 获取名字
-        var name = $(this).val()
+        var name = $(this).val().trim();
         // ajax
         // 1.实例化ajax对象 (小黄人对象)
         var xhr = new XMLHttpRequest()
